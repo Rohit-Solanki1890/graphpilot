@@ -1,0 +1,4 @@
+falkordb
+textual
+python-dotenv
+pytest
