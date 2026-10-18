@@ -190,6 +190,34 @@ PYTHONPATH=. .venv/bin/python -m app.graph.schema
 PYTHONPATH=. .venv/bin/python -m app.graph.seed
 ```
 
+### 4. View the Seeded Graph in FalkorDB Browser
+
+After starting FalkorDB and initializing the schema and seed data, open the browser interface:
+
+**http://localhost:3000**
+
+Select the `graphpilot` graph, if it appears in the interface.
+
+To visualize sample nodes and their relationships, run:
+
+```cypher
+MATCH (n)-[r]->(m)
+RETURN n, r, m
+LIMIT 100
+```
+
+To inspect the node labels and their counts, run:
+
+```cypher
+MATCH (n)
+RETURN labels(n) AS labels, count(*) AS count
+ORDER BY count DESC
+```
+
+These queries help you inspect the synthetic engineering data used by GraphPilot, including connected systems, people, incidents, and decisions.
+
+**Troubleshooting:** If the browser does not load, confirm that the FalkorDB container is running with `docker compose ps`. The browser interface and graph-selection steps may vary by FalkorDB version.
+
 ### 4. Run the Application (Deterministic or Ollama Mode)
 ```bash
 # Deterministic mode (no LLM required):
