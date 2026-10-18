@@ -1,0 +1,6 @@
+falkordb
+ollama
+textual
+python-dotenv
+pytest
+mcp>=1.0,<2
