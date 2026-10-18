@@ -402,6 +402,7 @@ class GraphPilotApp(App[None]):
                 wrap=True,
                 min_width=1,
             )
+            yield Container(id="approval-panels")
             yield Static(
                 "Ready — try: investigate Checkout | path from Ava Patel to Event Stream | rank systems | coordinate Checkout",
                 id="status",
@@ -440,7 +441,7 @@ class GraphPilotApp(App[None]):
         self.call_from_thread(self._show_result, result)
 
     def _show_result(self, result: dict[str, Any]) -> None:
-        log = self.query_one("#approval-panels", Container).mount(panel)
+        log = self.query_one("#conversation", RichLog)
         for line in format_turn(result):
             log.write(line)
 
