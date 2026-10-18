@@ -371,17 +371,26 @@ class GraphPilotApp(App[None]):
     Screen {
         background: $surface;
     }
+
     #conversation {
         height: 1fr;
+        min-height: 10;
         border: round $primary;
         padding: 1 2;
         scrollbar-size: 1 1;
     }
+
+    #approval-panels {
+        height: auto;
+        max-height: 12;
+    }
+
     #status {
         height: 1;
         padding: 0 1;
         color: $text-muted;
     }
+
     #message {
         dock: bottom;
         margin: 1 0;
@@ -394,6 +403,7 @@ class GraphPilotApp(App[None]):
 
     def compose(self) -> ComposeResult:
         yield Header()
+
         with Container():
             yield RichLog(
                 id="conversation",
@@ -402,15 +412,19 @@ class GraphPilotApp(App[None]):
                 wrap=True,
                 min_width=1,
             )
+
             yield Container(id="approval-panels")
+
             yield Static(
                 "Ready — try: investigate Checkout | path from Ava Patel to Event Stream | rank systems | coordinate Checkout",
                 id="status",
             )
+
             yield Input(
                 placeholder="Ask GraphPilot to investigate, find paths, rank systems, coordinate, or propose actions...",
                 id="message",
             )
+
         yield Footer()
 
     def on_mount(self) -> None:
@@ -442,14 +456,20 @@ class GraphPilotApp(App[None]):
 
     def _show_result(self, result: dict[str, Any]) -> None:
         log = self.query_one("#conversation", RichLog)
+
         for line in format_turn(result):
             log.write(line)
 
         tool_result = result.get("tool_result")
-        action = tool_result.get("action") if isinstance(tool_result, Mapping) else None
+        action = (
+            tool_result.get("action")
+            if isinstance(tool_result, Mapping)
+            else None
+        )
+
         if action and action.get("status") == "proposed":
             panel = ApprovalPanel(action)
-            self.query_one(VerticalScroll).mount(panel)
+            self.query_one("#approval-panels", Container).mount(panel)
             panel.scroll_visible()
 
         self.query_one("#status", Static).update(
