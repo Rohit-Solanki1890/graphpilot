@@ -250,3 +250,15 @@ Run these commands inside the TUI to demonstrate all three tracks:
 cd backend
 pytest tests/ -v
 ```
+
+## AI Assistance Disclosure
+
+AI coding tools were used throughout the development of GraphPilot, including GitHub Copilot, Gemini, and ChatGPT.
+
+These tools assisted with code generation, implementation changes, debugging, architecture discussions, code review, and documentation. AI-assisted changes included parts of the graph schema and seed data, FalkorDB queries and graph algorithms, entity resolution and decision provenance, agent tool definitions, multi-agent coordination, approval-gated actions, and submission documentation.
+
+The project was developed iteratively, with AI assistance used to explore solutions and make implementation changes. I am responsible for the submitted project and for accurately representing its functionality. I am continuing to validate the implementation, and features or behaviors that have not been verified should not be considered fully tested.
+
+GraphPilot is built around FalkorDB as its graph database, with graph relationships and queries serving as core parts of the application's design.
+
+
